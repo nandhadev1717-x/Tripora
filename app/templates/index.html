@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Tripora — Your next adventure starts here{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-image"></div><div class="container hero-content">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR JOURNEY, YOUR WAY</div>
+    <h1>The world is wide.<br><em>Go find your place.</em></h1>
+    <p class="hero-copy">Thoughtfully picked places, trips that fit your budget, and a little inspiration for wherever life takes you.</p>
+    <div class="d-flex flex-wrap gap-3 mt-4"><a class="btn btn-lime btn-lg rounded-pill px-4" href="{{ url_for('main.destinations') }}">Explore destinations ↗</a><a class="btn btn-outline-light btn-lg rounded-pill px-4" href="{{ url_for('main.recommendations') }}">Find my trip ✦</a></div>
+    <div class="hero-stats"><div><strong>08</strong><span>curated places</span></div><div><strong>01</strong><span>you, in the lead</span></div><div><strong>∞</strong><span>ways to explore</span></div></div>
+  </div>
+  <div class="hero-caption">A LITTLE FURTHER, A LITTLE FREER — TRIPORA</div>
+</section>
+<section class="container search-panel-wrap">
+  <form class="search-panel" action="{{ url_for('main.destinations') }}" method="get">
+    <div class="search-field"><label>WHERE TO?</label><input name="q" placeholder="Try Munnar, Goa, Bali..."></div>
+    <div class="search-field"><label>YOUR MOOD</label><select name="category"><option value="">All experiences</option><option>Nature</option><option>Beach</option><option>Adventure</option><option>Culture</option><option>Relaxation</option><option>City</option></select></div>
+    <button class="btn btn-dark-green rounded-pill px-4">Find a place ↗</button>
+  </form>
+</section>
+<section class="section-pad container">
+  <div class="section-heading"><div><div class="eyebrow dark-eyebrow">PLACES WORTH THE JOURNEY</div><h2>Somewhere you'll <em>love.</em></h2></div><a class="text-link" href="{{ url_for('main.destinations') }}">See all destinations ↗</a></div>
+  <div class="row g-4">{% for d in destinations %}<div class="col-12 col-sm-6 col-lg-4"><a class="destination-card" href="{{ url_for('main.destination_detail', destination_id=d.id) }}"><div class="destination-photo" style="background-image:url('{{ d.image_url }}')"><span class="photo-tag">{{ d.category }}</span><span class="photo-arrow">↗</span></div><div class="destination-info"><div><h3>{{ d.name }}</h3><p>{{ d.region }}, {{ d.country }}</p></div><div class="price-from">from <strong>₹{{ "{:,}".format(d.estimated_cost) }}</strong></div></div><p class="destination-description">{{ d.description }}</p></a></div>{% endfor %}</div>
+</section>
+<section class="planner-band"><div class="container planner-inner"><div><div class="eyebrow">A SMARTER WAY TO WANDER</div><h2>Not sure where to go?<br><em>Let's figure it out.</em></h2><p>Tell us your budget, days, and travel vibe. Tripora will match you with places that make sense for you.</p><a href="{{ url_for('main.recommendations') }}" class="btn btn-lime rounded-pill px-4">Build my trip ✦</a></div><div class="planner-orbit"><div class="orbit-circle orbit-one"></div><div class="orbit-circle orbit-two"></div><div class="orbit-center">✦</div><span class="orbit-label label-one">YOUR BUDGET</span><span class="orbit-label label-two">YOUR VIBE</span><span class="orbit-label label-three">YOUR NEXT STOP</span></div></div></section>
+<section class="container section-pad"><div class="section-heading"><div><div class="eyebrow dark-eyebrow">HOW IT WORKS</div><h2>Three steps to <em>away.</em></h2></div></div><div class="row g-4">{% for n,title,desc in [('01','Tell us what you love','Pick your budget, trip length, and the experiences you want.'),('02','Meet your matches','Our recommendation engine ranks destinations and explains each match.'),('03','Make it happen','Choose a package and send a booking request to the agency.')] %}<div class="col-md-4"><div class="step-card"><span>{{ n }}</span><h3>{{ title }}</h3><p>{{ desc }}</p></div></div>{% endfor %}</div></section>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}My bookings — Tripora{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><div class="eyebrow dark-eyebrow">YOUR TRAVEL NOTEBOOK</div><h1>Every trip starts <em>somewhere.</em></h1><p>Track your booking requests and upcoming plans.</p></div></section>
+<section class="container pb-5">{% for b in bookings %}<article class="booking-row"><div class="booking-icon">✦</div><div class="booking-main"><h3>{{ b.package.title }}</h3><p>{{ b.package.destination.name }} · {{ b.travel_date.strftime('%d %b %Y') }} · {{ b.travellers }} traveller(s)</p></div><div class="booking-right"><strong>₹{{ "{:,}".format(b.total_price) }}</strong><span class="status status-{{ b.status|lower }}">{{ b.status }}</span></div></article>{% else %}<div class="empty-state"><h3>No bookings yet</h3><p>Your next adventure is waiting to be picked.</p><a class="btn btn-dark-green rounded-pill" href="{{ url_for('main.destinations') }}">Explore destinations</a></div>{% endfor %}</section>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Destinations — Tripora{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><div class="eyebrow dark-eyebrow">THE WORLD IS CALLING</div><h1>Find your <em>somewhere.</em></h1><p>From slow mornings in the hills to salty hair by the sea.</p></div></section>
+<section class="container pb-5">
+<form class="filter-bar" method="get"><input class="form-control" name="q" value="{{ search }}" placeholder="Search destinations or regions"><select class="form-select" name="category"><option value="">All categories</option>{% for c in categories %}<option value="{{ c }}" {% if selected_category==c %}selected{% endif %}>{{ c }}</option>{% endfor %}</select><button class="btn btn-dark-green rounded-pill px-4">Search</button></form>
+<div class="row g-4 mt-2">{% for d in destinations %}<div class="col-sm-6 col-lg-4"><a class="destination-card" href="{{ url_for('main.destination_detail', destination_id=d.id) }}"><div class="destination-photo" style="background-image:url('{{ d.image_url }}')"><span class="photo-tag">{{ d.category }}</span><span class="photo-arrow">↗</span></div><div class="destination-info"><div><h3>{{ d.name }}</h3><p>{{ d.region }}, {{ d.country }}</p></div><div class="price-from">from <strong>₹{{ "{:,}".format(d.estimated_cost) }}</strong></div></div><p class="destination-description">{{ d.description }}</p></a></div>{% else %}<div class="col-12 empty-state">No destinations matched. Try a different search.</div>{% endfor %}</div></section>
+{% endblock %}
